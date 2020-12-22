@@ -64,19 +64,50 @@ public class MinPathSum64 {
      * @param grid
      * @return
      */
-    private int[][] cache;
-    public int minPathSum(int[][] grid) {
+    public int minPathSum01(int[][] grid) {
         int m = grid.length;
         int n = grid[0].length;
 
-        cache = new int[m][n];
+        int[][] cache = new int[m][n];
         for (int[] row : cache) {
             Arrays.fill(row, -1);
         }
-        return dp(grid, m - 1, n - 1);
+        return dp(grid, m - 1, n - 1, cache);
     }
 
-    private int dp(int[][] grid, int i, int j) {
+    /**
+     * 实现二：自底向上
+     * 定义dp[i][j]数组，表示从(0,0)->(i,j)的最小路径和。
+     *
+     * @param grid
+     * @return
+     */
+    public int minPathSum02(int[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
+
+        int[][] dp = new int[m][n];
+
+        // base case:0列
+        dp[0][0] = grid[0][0];
+        for (int i = 1; i < m; i++) {
+            dp[i][0] = dp[i-1][0] + grid[i][0];
+        }
+
+        // base case:0行
+        for (int j = 1; j < n; j++) {
+            dp[0][j] = dp[0][j-1] + grid[0][j];
+        }
+
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                dp[i][j] = Math.min(dp[i-1][j], dp[i][j-1]) + grid[i][j];
+            }
+        }
+        return dp[m-1][n-1];
+    }
+
+    private int dp(int[][] grid, int i, int j, int[][] cache) {
         if (i == 0 && j == 0) {
             return grid[0][0];
         }
@@ -90,7 +121,7 @@ public class MinPathSum64 {
             return cache[i][j];
         }
 
-        cache[i][j] = Math.min(dp(grid, i - 1, j), dp(grid, i, j - 1)) + grid[i][j];
+        cache[i][j] = Math.min(dp(grid, i - 1, j, cache), dp(grid, i, j - 1, cache)) + grid[i][j];
         return cache[i][j];
     }
 }
