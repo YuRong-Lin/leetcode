@@ -63,6 +63,7 @@ public class FindDuplicateSubtrees652 {
      */
     private List<TreeNode> duplicate = new LinkedList<>();
     private Map<String, Integer> cache = new HashMap<>(16);
+
     public List<TreeNode> findDuplicateSubtrees(TreeNode root) {
         if (root == null) {
             return Collections.emptyList();
