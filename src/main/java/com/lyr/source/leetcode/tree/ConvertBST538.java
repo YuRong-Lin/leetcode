@@ -62,7 +62,7 @@ package com.lyr.source.leetcode.tree;
  * @Date 2021/1/8 17:05
  * @Version 1.0
  */
-public class convertBST538 {
+public class ConvertBST538 {
 
     /**
      * 【限定条件】：1）二叉搜索树；2）使每个节点 node 的新值等于原树中大于或等于node.val的值之和。
